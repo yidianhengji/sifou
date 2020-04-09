@@ -23,7 +23,7 @@ public class Labels {
     private String iconUrl;
 
     @ApiModelProperty(value = "描述")
-    private String desc;
+    private String description;
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;

@@ -10,12 +10,34 @@
         <result property="modifyTime" column="modify_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
+    <resultMap type="com.pg.bbs.entity.Channels" id="ChannelsLabelMap">
+        <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="iconUrl" column="icon_url" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="modifyTime" column="modify_time" jdbcType="TIMESTAMP"/>
+        <collection property="labelList"  ofType="com.pg.bbs.entity.Labels" >
+            <id column="channels_id" jdbcType="VARCHAR" property="uuid"></id>
+            <result property="channelsId" column="channels_id" jdbcType="VARCHAR"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="iconUrl" column="icon_url" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="modifyTime" column="modify_time" jdbcType="TIMESTAMP"/>
+        </collection>
+    </resultMap>
+
     <select id="queryAll" resultMap="ChannelsMap">
         select * from tb_channels ORDER BY create_time
     </select>
 
     <select id="queryList" resultMap="ChannelsMap">
         select * from tb_channels ORDER BY create_time
+    </select>
+
+    <select id="queryLabelList" resultMap="ChannelsLabelMap">
+        SELECT c1.*, c2.* from tb_channels c1 join tb_labels c2 on  c1.uuid = c2.channels_id
     </select>
 
     <insert id="insert">

@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
-Source Server Version : 50562
+Source Server Version : 50560
 Source Host           : localhost:3306
 Source Database       : bbs_sifou
 
 Target Server Type    : MYSQL
-Target Server Version : 50562
+Target Server Version : 50560
 File Encoding         : 65001
 
-Date: 2020-04-08 17:39:44
+Date: 2020-04-09 21:41:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -92,7 +92,7 @@ CREATE TABLE `tb_labels` (
   `channels_id` varchar(50) DEFAULT NULL COMMENT '频道id',
   `name` varchar(10) DEFAULT NULL COMMENT '标签名称',
   `icon_url` varchar(255) DEFAULT NULL COMMENT '图标',
-  `desc` varchar(120) DEFAULT NULL COMMENT '描述',
+  `description` varchar(120) DEFAULT NULL COMMENT '描述',
   `create_time` datetime DEFAULT NULL,
   `modify_time` datetime DEFAULT NULL,
   PRIMARY KEY (`uuid`)
@@ -101,6 +101,14 @@ CREATE TABLE `tb_labels` (
 -- ----------------------------
 -- Records of tb_labels
 -- ----------------------------
+INSERT INTO `tb_labels` VALUES ('15941dc0af92453481b8a0626f963283', '7b3e40f8b9cc4b7780dc39a71d7f580e', '微信小程序', '', '', '2020-04-09 19:49:34', '2020-04-09 19:49:34');
+INSERT INTO `tb_labels` VALUES ('1d0ffae0426e4e6e8add67530ec689b4', '049b3bd76c1e49ccbe48b36197e77f76', 'html', '', '', '2020-04-09 19:47:46', '2020-04-09 19:47:46');
+INSERT INTO `tb_labels` VALUES ('219d7aff8dfe4ffc9c8f368e2987187f', '7b3e40f8b9cc4b7780dc39a71d7f580e', '支付宝小程序', '', '', '2020-04-09 19:49:42', '2020-04-09 19:49:42');
+INSERT INTO `tb_labels` VALUES ('3283cc5d6e714f1eb30181e3d83d99af', '7b3e40f8b9cc4b7780dc39a71d7f580e', '百度小程序', '', '', '2020-04-09 19:49:47', '2020-04-09 19:49:47');
+INSERT INTO `tb_labels` VALUES ('401f1c4dcfbc499e8f7129c091c299f8', '049b3bd76c1e49ccbe48b36197e77f76', 'html5', '', '', '2020-04-09 19:48:27', '2020-04-09 19:48:27');
+INSERT INTO `tb_labels` VALUES ('7b39e36da1f543c995c416f3d2950cf5', '049b3bd76c1e49ccbe48b36197e77f76', 'css', '', '', '2020-04-09 19:48:41', '2020-04-09 19:48:41');
+INSERT INTO `tb_labels` VALUES ('d07dbcd8900c4d34811137be64dd4301', '049b3bd76c1e49ccbe48b36197e77f76', 'css3', '', '', '2020-04-09 19:48:44', '2020-04-09 19:48:44');
+INSERT INTO `tb_labels` VALUES ('d79254c4ca5e45dca9d484307c935281', '049b3bd76c1e49ccbe48b36197e77f76', 'javascript', '', '', '2020-04-09 19:49:00', '2020-04-09 19:49:00');
 
 -- ----------------------------
 -- Table structure for tb_recommend

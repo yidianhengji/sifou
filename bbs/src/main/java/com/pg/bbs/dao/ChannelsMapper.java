@@ -29,4 +29,10 @@ public interface ChannelsMapper {
      * 查询全部频道
      */
     List<Channels> queryList();
+
+    /**
+     * 查询频道下面全部的标签
+     * @return
+     */
+    List<Channels> queryLabelList();
 }

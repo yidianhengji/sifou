@@ -52,4 +52,10 @@ public class ChannelsServiceImpl implements ChannelsService {
         List<Channels> channelsList = this.channelsMapper.queryList();
         return channelsList;
     }
+
+    @Override
+    public List<Channels> queryLabelList() {
+        List<Channels> channelsList = this.channelsMapper.queryLabelList();
+        return channelsList;
+    }
 }

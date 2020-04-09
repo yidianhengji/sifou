@@ -54,4 +54,12 @@ public class ChannelsController {
         List<Channels> channels = channelsService.queryList();
         return new Result<List<Channels>>(BusinessStatus.SUCCESS, channels);
     }
+
+    @ApiOperation("查询频道下面全部的标签")
+    @RequestMapping(value = "/queryLabelList", method = RequestMethod.GET)
+    public Result<List<Channels>> queryLabelList() {
+        List<Channels> channels = channelsService.queryLabelList();
+        return new Result<List<Channels>>(BusinessStatus.SUCCESS, channels);
+    }
+
 }

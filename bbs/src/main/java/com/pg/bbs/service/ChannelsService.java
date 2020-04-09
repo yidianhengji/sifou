@@ -29,4 +29,9 @@ public interface ChannelsService {
      * 查询全部频道
      */
     List<Channels> queryList();
+
+    /**
+     * 查询频道下面全部的标签
+     */
+    List<Channels> queryLabelList();
 }

@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @ApiModel(description = "频道表")
 @Data
@@ -21,6 +22,9 @@ public class Channels {
 
     @ApiModelProperty(value = "图标")
     private String iconUrl;
+
+    @ApiModelProperty(value = "标签列表")
+    private List<Labels> labelList;
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
