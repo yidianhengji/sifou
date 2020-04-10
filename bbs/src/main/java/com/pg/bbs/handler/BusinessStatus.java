@@ -25,6 +25,7 @@ public enum BusinessStatus {
     ROLE_ERROR(2007,"角色下面存在用户，不能进行删除"),
     DEL_OPEAR_ERROR(2008, "不能通过修改接口直接更改status状态"),
     SHIRO_REAML_ERROR(2999, "用户名或密码错误"),
+    PHONE_FORMAT_ERROR(2006, "手机格式不正确"),
 
     /**
      * 任务活动模块异常

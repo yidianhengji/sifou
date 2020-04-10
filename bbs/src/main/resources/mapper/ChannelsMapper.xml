@@ -11,20 +11,18 @@
     </resultMap>
 
     <resultMap type="com.pg.bbs.entity.Channels" id="ChannelsLabelMap">
-        <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
+        <id property="uuid" column="uuid" jdbcType="VARCHAR"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="url" column="url" jdbcType="VARCHAR"/>
         <result property="iconUrl" column="icon_url" jdbcType="VARCHAR"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="modifyTime" column="modify_time" jdbcType="TIMESTAMP"/>
-        <collection property="labelList"  ofType="com.pg.bbs.entity.Labels" >
-            <id column="channels_id" jdbcType="VARCHAR" property="uuid"></id>
+        <collection property="labelList" ofType="com.pg.bbs.entity.Labels"  javaType="java.util.List">
+            <id property="uuid" column="c_uuid" jdbcType="VARCHAR"/>
             <result property="channelsId" column="channels_id" jdbcType="VARCHAR"/>
-            <result property="name" column="name" jdbcType="VARCHAR"/>
-            <result property="iconUrl" column="icon_url" jdbcType="VARCHAR"/>
-            <result property="description" column="description" jdbcType="VARCHAR"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="modifyTime" column="modify_time" jdbcType="TIMESTAMP"/>
+            <result property="name" column="c_name" jdbcType="VARCHAR"/>
+            <result property="iconUrl" column="c_icon_url" jdbcType="VARCHAR"/>
+            <result property="description" column="c_description" jdbcType="VARCHAR"/>
         </collection>
     </resultMap>
 
@@ -37,7 +35,14 @@
     </select>
 
     <select id="queryLabelList" resultMap="ChannelsLabelMap">
-        SELECT c1.*, c2.* from tb_channels c1 join tb_labels c2 on  c1.uuid = c2.channels_id
+        SELECT
+            c1.*, c2.uuid AS c_uuid,
+            c2. NAME AS c_name,
+            c2.icon_url AS c_icon_url,
+            c2.description AS c_description
+        FROM
+            tb_channels c1
+        LEFT JOIN tb_labels c2 ON c1.uuid = c2.channels_id
     </select>
 
     <insert id="insert">

@@ -1,5 +1,6 @@
 package com.pg.bbs.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -23,13 +24,13 @@ public class Channels {
     @ApiModelProperty(value = "图标")
     private String iconUrl;
 
-    @ApiModelProperty(value = "标签列表")
-    private List<Labels> labelList;
-
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
+
 
     @ApiModelProperty(value = "更新时间")
     private Date modifyTime;
 
+    @ApiModelProperty(value = "标签列表")
+    private List<Labels> labelList;
 }

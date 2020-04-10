@@ -34,7 +34,7 @@ public class ChannelsController {
     }
 
     @ApiOperation("修改频道")
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public Result<Channels> update(@RequestBody Channels channels) {
         channelsService.update(channels);
         return new Result<Channels>(BusinessStatus.SUCCESS);
