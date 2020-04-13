@@ -34,4 +34,12 @@ public class RecommendController {
         recommendService.update(recommend);
         return new Result<Recommend>(BusinessStatus.SUCCESS);
     }
+
+    @ApiOperation("文章数据采集")
+    @RequestMapping(value = "/collect", method = RequestMethod.POST)
+    public Result<Recommend> collect() {
+        recommendService.collect();
+        return new Result<Recommend>(BusinessStatus.SUCCESS);
+    }
+
 }

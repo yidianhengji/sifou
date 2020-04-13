@@ -14,4 +14,9 @@ public interface RecommendService {
      * @param recommend
      */
     int update(Recommend recommend);
+
+    /**
+     * 数据采集
+     */
+    void collect();
 }
