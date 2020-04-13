@@ -10,10 +10,7 @@ import com.pg.bbs.handler.ResultPage;
 import com.pg.bbs.service.ChannelsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -37,6 +34,13 @@ public class ChannelsController {
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public Result<Channels> update(@RequestBody Channels channels) {
         channelsService.update(channels);
+        return new Result<Channels>(BusinessStatus.SUCCESS);
+    }
+
+    @ApiOperation("删除频道")
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public Result<Channels> delete(@RequestParam String uuid) {
+        channelsService.delete(uuid);
         return new Result<Channels>(BusinessStatus.SUCCESS);
     }
 

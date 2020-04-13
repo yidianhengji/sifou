@@ -27,4 +27,11 @@ public class RecommendController {
         recommendService.insert(recommend);
         return new Result<Recommend>(BusinessStatus.SUCCESS);
     }
+
+    @ApiOperation("修改文章/问答")
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    public Result<Recommend> update(@RequestBody Recommend recommend) {
+        recommendService.update(recommend);
+        return new Result<Recommend>(BusinessStatus.SUCCESS);
+    }
 }

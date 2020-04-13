@@ -1,6 +1,6 @@
 package com.pg.bbs.config;
 
-import com.pg.bbs.interceptor.AuthenticationInterceptor;
+import com.pg.bbs.interceptor.JwtInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -17,6 +17,6 @@ public class JwtInterceptorConfig implements WebMvcConfigurer {
 
     @Bean
     public HandlerInterceptor authenticationInterceptor() {
-        return new AuthenticationInterceptor();
+        return new JwtInterceptor();
     }
 }

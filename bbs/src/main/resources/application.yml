@@ -21,4 +21,5 @@ jdbc:
 jwt:
   secretkey: token123
   expiretime: 86400000
-  path: /api/channels/queryAll,/api/channels/queryLabelList
+  path: /api/recommend/save,/api/recommend/updata,/api/labels/save,/api/labels/update,/api/labels/delete,/api/channels/save,/api/channels/update
+#新增修改文章/问答，新增修改删除标签，新增修改删除频道

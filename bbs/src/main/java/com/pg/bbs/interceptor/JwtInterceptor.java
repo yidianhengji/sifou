@@ -15,7 +15,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AuthenticationInterceptor implements HandlerInterceptor {
+public class JwtInterceptor implements HandlerInterceptor {
 
     @Value("${jwt.secretkey}")
     private String jwtSecretkey;

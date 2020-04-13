@@ -37,7 +37,7 @@ public class Recommend {
     @ApiModelProperty(value = "富文本内容")
     private String content;
 
-    @ApiModelProperty(value = "1、草稿箱  2、审核中 3、推荐")
+    @ApiModelProperty(value = "1、草稿箱 2、推荐")
     private Integer status;
 
     @ApiModelProperty(value = "1 文章  2 问答")

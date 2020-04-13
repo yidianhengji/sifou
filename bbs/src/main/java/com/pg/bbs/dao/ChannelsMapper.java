@@ -20,6 +20,12 @@ public interface ChannelsMapper {
     int update(Channels channels);
 
     /**
+     * 删除频道
+     * @param uuid
+     */
+    int delete(String uuid);
+
+    /**
      * 分页查询频道
      * @param channelsDto
      */

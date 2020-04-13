@@ -39,6 +39,11 @@ public class ChannelsServiceImpl implements ChannelsService {
     }
 
     @Override
+    public int delete(String uuid) {
+        return channelsMapper.delete(uuid);
+    }
+
+    @Override
     public Page<Channels> queryAll(ChannelsDto channelsDto) {
         if (channelsDto.getPageSize() != null && channelsDto.getPageNum() != null) {
             PageHelper.startPage(channelsDto.getPageNum(), channelsDto.getPageSize());

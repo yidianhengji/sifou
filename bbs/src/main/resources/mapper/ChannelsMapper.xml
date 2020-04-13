@@ -72,4 +72,8 @@
         where uuid = #{uuid}
     </update>
 
+    <delete id="delete">
+        DELETE FROM tb_channels WHERE uuid = #{uuid}
+    </delete>
+
 </mapper>
