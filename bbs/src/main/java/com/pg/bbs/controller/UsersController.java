@@ -33,8 +33,8 @@ public class UsersController {
 
     @ApiOperation("用户登录")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Result<Users> signIn(@RequestBody UsersSignIn usersSignIn) {
-        Users users = usersService.signIn(usersSignIn);
-        return new Result<Users>(BusinessStatus.SUCCESS, users);
+    public Result<String> signIn(@RequestBody UsersSignIn usersSignIn) {
+        String token = usersService.signIn(usersSignIn);
+        return new Result<String>(BusinessStatus.SUCCESS, token);
     }
 }

@@ -16,6 +16,12 @@ public interface UsersService {
      * 用户登录
      * @param usersSignIn
      */
-    Users signIn(UsersSignIn usersSignIn);
+    String signIn(UsersSignIn usersSignIn);
+
+    /**
+     * 根据用户id查询用户信息
+     * @param uuid
+     */
+    Users findUserById(String uuid);
 
 }

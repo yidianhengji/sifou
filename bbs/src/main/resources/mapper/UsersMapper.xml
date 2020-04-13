@@ -24,6 +24,10 @@
         select COUNT(phone) from tb_users where phone = #{phone}
     </select>
 
+    <select id="findUserById" resultMap="UsersMap">
+        select * from tb_users where uuid = #{uuid}
+    </select>
+
     <insert id="signUp">
         insert into tb_users(uuid, nickname, phone, password, create_time, modify_time)
         values (#{uuid}, #{nickname}, #{phone}, #{password}, #{createTime}, #{modifyTime})

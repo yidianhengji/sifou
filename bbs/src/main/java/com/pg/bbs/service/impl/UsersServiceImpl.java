@@ -1,5 +1,7 @@
 package com.pg.bbs.service.impl;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.pg.bbs.dao.UsersMapper;
 import com.pg.bbs.dto.UsersSignIn;
 import com.pg.bbs.dto.UsersSignUp;
@@ -7,6 +9,7 @@ import com.pg.bbs.entity.Users;
 import com.pg.bbs.handler.BusinessException;
 import com.pg.bbs.handler.BusinessStatus;
 import com.pg.bbs.service.UsersService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -16,6 +19,12 @@ import java.util.UUID;
 
 @Service
 public class UsersServiceImpl implements UsersService {
+
+    @Value("${jwt.secretkey}")
+    private String jwtSecretkey;
+
+    @Value("${jwt.expiretime}")
+    private Long jwtExpiretime;
 
     @Resource
     private UsersMapper usersMapper;
@@ -43,7 +52,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public Users signIn(UsersSignIn usersSignIn) {
+    public String signIn(UsersSignIn usersSignIn) {
         if (usersSignIn.getPhone() == null || usersSignIn.getPhone().isEmpty()) {
             throw new BusinessException(BusinessStatus.PARAMETER_ERROR);
         }
@@ -60,6 +69,14 @@ public class UsersServiceImpl implements UsersService {
         if (!usedPassword.equals(newPassword)) {
             throw new BusinessException(BusinessStatus.PASSWORD_ERROR);
         }
-        return users;
+        Date expiresAt = new Date(System.currentTimeMillis() + jwtExpiretime);
+        String token = JWT.create().withAudience(users.getUuid()).withExpiresAt(expiresAt).sign(Algorithm.HMAC256(jwtSecretkey));
+        return token;
     }
+
+    @Override
+    public Users findUserById(String uuid) {
+        return usersMapper.findUserById(uuid);
+    }
+
 }

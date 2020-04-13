@@ -24,4 +24,10 @@ public interface UsersMapper {
      */
     int getUserPhone(String phone);
 
+    /**
+     * 根据用户id查询用户信息
+     * @param uuid
+     */
+    Users findUserById(String uuid);
+
 }
