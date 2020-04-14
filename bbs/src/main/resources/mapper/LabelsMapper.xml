@@ -15,6 +15,10 @@
         select * from tb_labels where uuid = #{uuid}
     </select>
 
+    <select id="findName" resultType="java.lang.Integer">
+        select COUNT(name) from tb_labels where name = #{name}
+    </select>
+
     <insert id="insert">
         insert into tb_labels(uuid, channels_id, name, icon_url, description, create_time, modify_time)
         values (#{uuid}, #{channelsId}, #{name}, #{iconUrl}, #{description}, #{createTime}, #{modifyTime})

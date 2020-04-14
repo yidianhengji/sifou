@@ -1,6 +1,5 @@
 package com.pg.bbs.controller;
 
-import com.auth0.jwt.JWT;
 import com.pg.bbs.entity.Labels;
 import com.pg.bbs.handler.BusinessStatus;
 import com.pg.bbs.handler.Result;

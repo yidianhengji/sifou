@@ -16,6 +16,12 @@ public interface RecommendService {
     int update(Recommend recommend);
 
     /**
+     * 查询文章、问答详情
+     * @param uuid
+     */
+    Recommend findById(String uuid);
+
+    /**
      * 数据采集
      */
     void collect();

@@ -47,33 +47,63 @@ public class RecommendServiceImpl implements RecommendService {
     }
 
     @Override
+    public Recommend findById(String uuid) {
+        return recommendMapper.findById(uuid);
+    }
+
+    @Override
     public void collect() {
         String url = "https://segmentfault.com/";
+        String subUrl = "https://segmentfault.com/a/";
         try {
             ArrayList<Recommend> arrayList = new ArrayList<>();
             Document doc = Jsoup.connect(url).get();
             Elements divsBig = doc.getElementsByClass("news-item stream__item clearfix mt15");
-            for (int i = 0; i < divsBig.size(); i++) {
-                Recommend recommends = new Recommend();
-                // 获取title
-                recommends.setTitle(divsBig.get(i).getElementsByClass("news__item-title mt0").get(0).ownText());
-                // 获取列表展示字段
-                recommends.setExcerpt(divsBig.get(i).getElementsByClass("article-excerpt").get(0).ownText());
-                // 获取封面图
-                Element newsImg = divsBig.get(i).getElementsByClass("news-img").get(0);
-                if(newsImg!=null){
-                    String newsImgStyle = newsImg.attr("style");
-                    String newsImgStyleSub = newsImgStyle.substring(21, newsImgStyle.length() - 1);
-                    recommends.setImageUrl(newsImgStyleSub);
+            if (null != divsBig && divsBig.size() != 0) {
+                for (int i = 0; i < divsBig.size(); i++) {
+                    Recommend recommends = new Recommend();
+
+                    recommends.setUuid(UUID.randomUUID().toString().replace("-", ""));
+                    recommends.setVotes(0);
+                    recommends.setViewsWord(0);
+                    recommends.setType(1);
+                    recommends.setCreateTime(new Date());
+                    recommends.setModifyTime(new Date());
+
+                    // 获取title
+                    Element title = divsBig.get(i).getElementsByClass("news__item-title mt0").get(0);
+                    if (null != title) {
+                        recommends.setTitle(title.ownText().trim());
+                    }
+                    // 获取列表展示字段
+                    Element excerpt = divsBig.get(i).getElementsByClass("article-excerpt").get(0);
+                    if (null != excerpt) {
+                        recommends.setExcerpt(excerpt.ownText().trim());
+                    }
+                    // 获取封面图
+                    Elements newsImg = divsBig.get(i).getElementsByClass("news-img");
+                    if (null != newsImg && newsImg.size() != 0) {
+                        String newsImgStyle = newsImg.attr("style");
+                        String newsImgStyleSub = newsImgStyle.substring(21, newsImgStyle.length() - 1);
+                        recommends.setImageUrl(newsImgStyleSub);
+                    }
+
+                    // 富文本内容
+                    String dataId = divsBig.get(i).attr("data-id");
+                    if(null != dataId) {
+                        Document docOne = Jsoup.connect(subUrl+dataId).get();
+                        String content = docOne.getElementsByClass("article fmt article-content").html();
+                        // recommends.setContent(content);
+                    }
+
+                    int count = recommendMapper.findQueryTitle(recommends.getTitle());
+                    if (count == 0) {
+                        recommendMapper.insert(recommends);
+                    }
+
+                    System.out.println(recommends.toString() + "\n");
                 }
-
-
-
-
-
-                System.out.println(recommends.toString()+"\n");
             }
-
         } catch (IOException e) {
             System.out.println(e);
         }

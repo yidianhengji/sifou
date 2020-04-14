@@ -30,4 +30,10 @@ public interface LabelsMapper {
      */
     int delete(String uuid);
 
+    /**
+     * 根据name查询
+     * @param name
+     */
+    int findName(String name);
+
 }

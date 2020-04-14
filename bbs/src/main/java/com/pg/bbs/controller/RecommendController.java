@@ -6,10 +6,7 @@ import com.pg.bbs.handler.Result;
 import com.pg.bbs.service.RecommendService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -41,5 +38,19 @@ public class RecommendController {
         recommendService.collect();
         return new Result<Recommend>(BusinessStatus.SUCCESS);
     }
+
+    @ApiOperation("查询文章、问答详情")
+    @RequestMapping(value = "/queryOne", method = RequestMethod.GET)
+    public Result<Recommend> findById(@RequestParam String uuid) {
+        Recommend list = recommendService.findById(uuid);
+        Recommend recommend = new Recommend();
+        recommend.setUuid(list.getUuid());
+        int viewsWord = list.getViewsWord();
+        int num = viewsWord+1;
+        recommend.setViewsWord(num);
+        recommendService.update(recommend);
+        return new Result<Recommend>(BusinessStatus.SUCCESS, list);
+    }
+
 
 }

@@ -14,4 +14,17 @@ public interface RecommendMapper {
      * @param recommend
      */
     int update(Recommend recommend);
+
+    /**
+     * 根据标题查询
+     * @param title
+     */
+    int findQueryTitle(String title);
+
+    /**
+     * 查询文章、问答详情
+     * @param uuid
+     */
+    Recommend findById(String uuid);
+
 }

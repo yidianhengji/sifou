@@ -7,6 +7,7 @@ import com.pg.bbs.entity.Users;
 import com.pg.bbs.handler.BusinessStatus;
 import com.pg.bbs.handler.Result;
 import com.pg.bbs.service.UsersService;
+import com.pg.bbs.util.JwtGetUserInterceptor;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,4 +38,13 @@ public class UsersController {
         String token = usersService.signIn(usersSignIn);
         return new Result<String>(BusinessStatus.SUCCESS, token);
     }
+
+    @ApiOperation("获取用户信息")
+    @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
+    public Result<Users> userInfo() {
+        String userId = JwtGetUserInterceptor.getUserId();
+        Users user = usersService.findUserById(userId);
+        return new Result<>(BusinessStatus.SUCCESS, user);
+    }
+
 }

@@ -4,6 +4,7 @@ import com.github.pagehelper.util.StringUtil;
 import com.pg.bbs.dao.LabelsMapper;
 import com.pg.bbs.entity.Labels;
 import com.pg.bbs.handler.BusinessException;
+import com.pg.bbs.handler.BusinessStatus;
 import com.pg.bbs.service.LabelsService;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,10 @@ public class LabelsServiceImpl implements LabelsService {
 
     @Override
     public int insert(Labels labels) {
+        int count = labelsMapper.findName(labels.getName());
+        if (count > 0) {
+            throw new BusinessException(BusinessStatus.LABEL_ERROR);
+        }
         labels.setUuid(UUID.randomUUID().toString().replace("-", ""));
         labels.setCreateTime(new Date());
         labels.setModifyTime(new Date());

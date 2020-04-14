@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pg.bbs.dao.CommentMapper">
+    <resultMap type="com.pg.bbs.entity.Comment" id="CommentMap">
+        <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
+        <result property="parentId" column="parent_id" jdbcType="VARCHAR"/>
+        <result property="recommendId" column="recommend_id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="userImageUrl" column="user_image_url" jdbcType="VARCHAR"/>
+        <result property="likeNumber" column="like_number" jdbcType="INTEGER"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="queryRecommendById" resultMap="CommentMap">
+        SELECT
+            co.*, us.nickname AS user_name,
+            us.image_url AS user_image_url
+        FROM
+            tb_comment co
+        LEFT JOIN tb_users us ON co.user_id = us.uuid
+        WHERE
+            recommend_id = #{recommendId}
+        ORDER BY
+            co.create_time
+    </select>
+
+    <insert id="insert">
+        insert into tb_comment(uuid, parent_id, recommend_id, user_id, like_number, content, create_time)
+        values (#{uuid}, #{parentId}, #{recommendId}, #{userId}, #{likeNumber}, #{content}, #{createTime})
+    </insert>
+
+    <delete id="deleteUuid">
+        delete from tb_comment where uuid = #{uuid}
+    </delete>
+
+    <delete id="deleteParentId">
+        delete from tb_comment where parent_id = #{parentId}
+    </delete>
+
+
+</mapper>

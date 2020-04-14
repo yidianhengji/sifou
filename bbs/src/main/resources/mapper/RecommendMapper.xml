@@ -39,6 +39,14 @@
         ORDER BY c.create_time
     </select>
 
+    <select id="findById" resultMap="RecommendMap">
+        select * from tb_recommend where uuid = #{uuid}
+    </select>
+
+    <select id="findQueryTitle" resultType="java.lang.Integer">
+        select COUNT(title) from tb_recommend where title = #{title}
+    </select>
+
     <insert id="insert">
         insert into  tb_recommend(uuid, title, excerpt, image_url, user_id, labels, votes, views_word, content, status, type, create_time, modify_time)
         values (#{uuid}, #{title}, #{excerpt}, #{imageUrl}, #{userId}, #{labels}, #{votes}, #{viewsWord}, #{content}, #{status}, #{type}, #{createTime}, #{modifyTime})

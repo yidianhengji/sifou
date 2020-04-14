@@ -24,6 +24,7 @@ public enum BusinessStatus {
     NO_USER_INVALID(203, "用户不存在，请重新登录"),
     UUID_REQ(2005, "uuid不能为空"),
     MOBILE_ERROR(2006, "手机号码已注册"),
+    LABEL_ERROR(2006, "该标签已存在"),
     ROLE_ERROR(2007,"角色下面存在用户，不能进行删除"),
     DEL_OPEAR_ERROR(2008, "不能通过修改接口直接更改status状态"),
     SHIRO_REAML_ERROR(2999, "用户名或密码错误"),
