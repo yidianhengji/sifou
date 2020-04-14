@@ -11,6 +11,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.HtmlUtils;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -90,15 +91,19 @@ public class RecommendServiceImpl implements RecommendService {
 
                     // 富文本内容
                     String dataId = divsBig.get(i).attr("data-id");
-                    if(null != dataId) {
-                        Document docOne = Jsoup.connect(subUrl+dataId).get();
+                    if (null != dataId) {
+                        Document docOne = Jsoup.connect(subUrl + dataId).get();
                         String content = docOne.getElementsByClass("article fmt article-content").html();
-                        // recommends.setContent(content);
+                        recommends.setContent(content);
                     }
 
                     int count = recommendMapper.findQueryTitle(recommends.getTitle());
                     if (count == 0) {
-                        recommendMapper.insert(recommends);
+                        try {
+                            recommendMapper.insert(recommends);
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
                     }
 
                     System.out.println(recommends.toString() + "\n");
@@ -109,4 +114,5 @@ public class RecommendServiceImpl implements RecommendService {
         }
 
     }
+
 }
