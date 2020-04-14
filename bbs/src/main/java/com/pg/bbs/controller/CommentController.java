@@ -1,7 +1,6 @@
 package com.pg.bbs.controller;
 
 import com.pg.bbs.entity.Comment;
-import com.pg.bbs.entity.Recommend;
 import com.pg.bbs.handler.BusinessStatus;
 import com.pg.bbs.handler.Result;
 import com.pg.bbs.service.CommentService;
