@@ -1,0 +1,30 @@
+{
+  "id": "1748920",
+  "name": "segmentfault",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "383683",
+      "name": "闹铃",
+      "font_class": "naoling",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "982375",
+      "name": "邮箱",
+      "font_class": "youxiang",
+      "unicode": "e667",
+      "unicode_decimal": 58983
+    },
+    {
+      "icon_id": "278298",
+      "name": "search",
+      "font_class": "search",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    }
+  ]
+}
