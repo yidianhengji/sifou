@@ -30,4 +30,9 @@ public interface UsersMapper {
      */
     Users findUserById(String uuid);
 
+    /**
+     * 随机取一条数据
+     */
+    Users randomData();
+
 }

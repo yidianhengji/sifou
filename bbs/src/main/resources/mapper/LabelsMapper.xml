@@ -19,6 +19,10 @@
         select COUNT(name) from tb_labels where name = #{name}
     </select>
 
+    <select id="findListNameData" resultMap="LabelsMap">
+        select * from tb_labels where name = #{name}
+    </select>
+
     <insert id="insert">
         insert into tb_labels(uuid, channels_id, name, icon_url, description, create_time, modify_time)
         values (#{uuid}, #{channelsId}, #{name}, #{iconUrl}, #{description}, #{createTime}, #{modifyTime})
@@ -52,7 +56,6 @@
     <delete id="delete">
         DELETE FROM tb_labels WHERE uuid = #{uuid}
     </delete>
-
 
 
 </mapper>

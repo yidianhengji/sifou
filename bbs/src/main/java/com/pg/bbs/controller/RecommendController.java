@@ -1,5 +1,6 @@
 package com.pg.bbs.controller;
 
+import com.pg.bbs.dto.CollectDto;
 import com.pg.bbs.entity.Recommend;
 import com.pg.bbs.handler.BusinessStatus;
 import com.pg.bbs.handler.Result;
@@ -34,8 +35,8 @@ public class RecommendController {
 
     @ApiOperation("文章数据采集")
     @RequestMapping(value = "/collect", method = RequestMethod.POST)
-    public Result<Recommend> collect() {
-        recommendService.collect();
+    public Result<Recommend> collect(@RequestBody CollectDto collectDto) {
+        recommendService.collect(collectDto);
         return new Result<Recommend>(BusinessStatus.SUCCESS);
     }
 

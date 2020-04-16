@@ -36,4 +36,10 @@ public interface LabelsMapper {
      */
     int findName(String name);
 
+    /**
+     * 根据name查询数据
+     * @param name
+     */
+    Labels findListNameData(String name);
+
 }

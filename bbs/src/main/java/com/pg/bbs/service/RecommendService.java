@@ -1,5 +1,6 @@
 package com.pg.bbs.service;
 
+import com.pg.bbs.dto.CollectDto;
 import com.pg.bbs.entity.Recommend;
 
 public interface RecommendService {
@@ -24,5 +25,5 @@ public interface RecommendService {
     /**
      * 数据采集
      */
-    void collect();
+    void collect(CollectDto collectDto);
 }
