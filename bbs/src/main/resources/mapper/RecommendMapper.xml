@@ -8,7 +8,6 @@
         <result property="imageUrl" column="image_url" jdbcType="VARCHAR"/>
         <result property="userId" column="user_id" jdbcType="VARCHAR"/>
         <result property="labels" column="labels" jdbcType="VARCHAR"/>
-        <result property="votes" column="votes" jdbcType="INTEGER"/>
         <result property="viewsWord" column="views_word" jdbcType="INTEGER"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>
         <result property="status" column="status" jdbcType="INTEGER"/>
@@ -18,25 +17,23 @@
     </resultMap>
 
     <select id="queryAll" resultMap="RecommendMap">
-        select
-        c.*,
-        u.username,
-        u.head_pic as headPic
-        from
-        tb_comment c
-        LEFT JOIN
-        tb_user u
-        ON
-        c.user_id = u.uuid
-        <where>
-            <if test="articleId != null and articleId != ''">
-                and c.article_id = #{articleId}
-            </if>
-            <if test="userId != null and userId != ''">
-                and c.user_id = #{userId}
-            </if>
-        </where>
-        ORDER BY c.create_time
+        SELECT
+            rec.uuid,
+            rec.title,
+            rec.excerpt,
+            rec.image_url,
+            rec.user_id,
+            rec.views_word,
+            rec.create_time,
+            use1.nickname as userNickname,
+            use1.image_url AS userUrl,
+            ch1.name AS channelsName
+        FROM
+            tb_recommend rec
+        LEFT JOIN tb_channels ch1 ON ch1.url = #{channelsType}
+        LEFT JOIN tb_users use1 ON rec.user_id = use1.uuid
+        ORDER BY
+            rec.create_time
     </select>
 
     <select id="findById" resultMap="RecommendMap">

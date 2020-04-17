@@ -1,9 +1,14 @@
 package com.pg.bbs.controller;
 
+import com.github.pagehelper.Page;
 import com.pg.bbs.dto.CollectDto;
+import com.pg.bbs.dto.RecommendDto;
+import com.pg.bbs.entity.Channels;
 import com.pg.bbs.entity.Recommend;
 import com.pg.bbs.handler.BusinessStatus;
+import com.pg.bbs.handler.PageInfo;
 import com.pg.bbs.handler.Result;
+import com.pg.bbs.handler.ResultPage;
 import com.pg.bbs.service.RecommendService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -47,11 +52,25 @@ public class RecommendController {
         Recommend recommend = new Recommend();
         recommend.setUuid(list.getUuid());
         int viewsWord = list.getViewsWord();
-        int num = viewsWord+1;
+        int num = viewsWord + 1;
         recommend.setViewsWord(num);
         recommendService.update(recommend);
         return new Result<Recommend>(BusinessStatus.SUCCESS, list);
     }
 
+    @ApiOperation("文章、问答点赞")
+    @RequestMapping(value = "/vote", method = RequestMethod.GET)
+    public Result<Integer> vote(@RequestParam String recommendId) {
+        int vote = recommendService.vote(recommendId);
+        return new Result<Integer>(BusinessStatus.SUCCESS, vote);
+    }
+
+    @ApiOperation("查询文章列表")
+    @RequestMapping(value = "queryAll", method = RequestMethod.POST)
+    public ResultPage<Recommend> queryAll(@RequestBody RecommendDto recommendDto) {
+        Page<Recommend> one = recommendService.queryAll(recommendDto);
+        PageInfo<Recommend> pageinfo = new PageInfo<>(one);
+        return new ResultPage<Recommend>(BusinessStatus.SUCCESS, pageinfo);
+    }
 
 }

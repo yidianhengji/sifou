@@ -23,6 +23,10 @@
         select * from tb_labels where name = #{name}
     </select>
 
+    <select id="findSplitData" resultMap="LabelsMap">
+        select uuid, name from tb_labels where FIND_IN_SET(uuid, #{ids})
+    </select>
+
     <insert id="insert">
         insert into tb_labels(uuid, channels_id, name, icon_url, description, create_time, modify_time)
         values (#{uuid}, #{channelsId}, #{name}, #{iconUrl}, #{description}, #{createTime}, #{modifyTime})

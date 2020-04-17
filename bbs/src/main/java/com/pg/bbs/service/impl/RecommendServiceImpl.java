@@ -1,13 +1,15 @@
 package com.pg.bbs.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.util.StringUtil;
 import com.pg.bbs.dao.LabelsMapper;
 import com.pg.bbs.dao.RecommendMapper;
+import com.pg.bbs.dao.RecommendVoteMapper;
 import com.pg.bbs.dao.UsersMapper;
 import com.pg.bbs.dto.CollectDto;
-import com.pg.bbs.entity.Labels;
-import com.pg.bbs.entity.Recommend;
-import com.pg.bbs.entity.Users;
+import com.pg.bbs.dto.RecommendDto;
+import com.pg.bbs.entity.*;
 import com.pg.bbs.handler.BusinessException;
 import com.pg.bbs.service.RecommendService;
 import com.pg.bbs.util.JwtGetUserInterceptor;
@@ -21,6 +23,7 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -35,13 +38,15 @@ public class RecommendServiceImpl implements RecommendService {
     @Resource
     private UsersMapper usersMapper;
 
+    @Resource
+    private RecommendVoteMapper recommendVoteMapper;
+
     @Override
     public int insert(Recommend recommend) {
         // 获取用户信息
         String userId = JwtGetUserInterceptor.getUserId();
         recommend.setUuid(UUID.randomUUID().toString().replace("-", ""));
         recommend.setUserId(userId);
-        recommend.setVotes(0);
         recommend.setViewsWord(0);
         recommend.setCreateTime(new Date());
         recommend.setModifyTime(new Date());
@@ -79,7 +84,6 @@ public class RecommendServiceImpl implements RecommendService {
                     Recommend recommends = new Recommend();
 
                     recommends.setUuid(UUID.randomUUID().toString().replace("-", ""));
-                    recommends.setVotes(0);
                     recommends.setViewsWord(0);
                     recommends.setType(1);
                     recommends.setStatus(3);
@@ -169,5 +173,49 @@ public class RecommendServiceImpl implements RecommendService {
         }
 
     }
+
+    @Override
+    public int vote(String recommendId) {
+        if (StringUtil.isEmpty(recommendId)) {
+            throw new BusinessException(500, "文章或问题id必传");
+        }
+        // 获取用户信息
+        String userId = JwtGetUserInterceptor.getUserId();
+        // 判断该记录是否存在，如果不存在代表点赞，如果存在代表取消点赞
+        int dataCount = 0;
+        int count = recommendVoteMapper.queryFindList(recommendId, userId);
+        if (count > 0) {
+            recommendVoteMapper.delete(recommendId, userId);
+            dataCount = count - 1;
+        } else {
+            RecommendVote recommendVote = new RecommendVote();
+            recommendVote.setUuid(UUID.randomUUID().toString().replace("-", ""));
+            recommendVote.setUserId(userId);
+            recommendVote.setRecommendId(recommendId);
+            recommendVoteMapper.insert(recommendVote);
+            dataCount = count + 1;
+        }
+        return dataCount;
+    }
+
+    @Override
+    public Page<Recommend> queryAll(RecommendDto recommendDto) {
+        if (recommendDto.getPageSize() != null && recommendDto.getPageNum() != null) {
+            PageHelper.startPage(recommendDto.getPageNum(), recommendDto.getPageSize());
+        }
+        Page<Recommend> pages = this.recommendMapper.queryAll(recommendDto);
+        for (Recommend recommend : pages) {
+            if(recommend.getLabels() != null && recommend.getLabels() != "") {
+                // 循环结果集，把标签集合查询出来
+                List<Labels> labelsList = labelsMapper.findSplitData(recommend.getLabels());
+                recommend.getLabelArr().addAll(labelsList);
+                // 巡检结果集，把点赞数量查询出来
+                int voteCount = recommendVoteMapper.queryCount(recommend.getUuid());
+                recommend.setVotes(voteCount);
+            }
+        }
+        return pages;
+    }
+
 
 }

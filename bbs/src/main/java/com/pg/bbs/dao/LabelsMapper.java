@@ -42,4 +42,9 @@ public interface LabelsMapper {
      */
     Labels findListNameData(String name);
 
+    /**
+     * 根据逗号分隔的数据查询list
+     */
+    List<Labels> findSplitData(String ids);
+
 }
