@@ -13,4 +13,20 @@ public class CollectDto {
 
     @ApiModelProperty(value = "频道地址")
     private String channelsPath;
+
+    public String getChannelsId() {
+        return channelsId;
+    }
+
+    public void setChannelsId(String channelsId) {
+        this.channelsId = channelsId;
+    }
+
+    public String getChannelsPath() {
+        return channelsPath;
+    }
+
+    public void setChannelsPath(String channelsPath) {
+        this.channelsPath = channelsPath;
+    }
 }

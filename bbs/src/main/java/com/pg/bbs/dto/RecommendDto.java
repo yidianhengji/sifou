@@ -17,4 +17,27 @@ public class RecommendDto {
     @ApiModelProperty(value = "类型")
     private String channelsType;
 
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public Integer getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public String getChannelsType() {
+        return channelsType;
+    }
+
+    public void setChannelsType(String channelsType) {
+        this.channelsType = channelsType;
+    }
 }
