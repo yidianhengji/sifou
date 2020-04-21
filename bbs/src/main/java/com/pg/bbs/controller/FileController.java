@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,7 +29,7 @@ public class FileController {
     private String nginxPath;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Result<String> upload(@RequestParam("file") MultipartFile file) {
+    public Result<String> upload(MultipartFile file) {
         log.info("文件上传: file: {}", file);
         String newFileName = UUID.randomUUID().toString().replace("-", "");
         String fileName = file.getOriginalFilename();

@@ -34,6 +34,9 @@ public class Recommend {
     @ApiModelProperty(value = "用户头像")
     private String userUrl;
 
+    @ApiModelProperty(value = "频道id")
+    private String channelsId;
+
     @ApiModelProperty(value = "标签id")
     private String labels;
 
@@ -115,6 +118,14 @@ public class Recommend {
 
     public void setUserUrl(String userUrl) {
         this.userUrl = userUrl;
+    }
+
+    public String getChannelsId() {
+        return channelsId;
+    }
+
+    public void setChannelsId(String channelsId) {
+        this.channelsId = channelsId;
     }
 
     public String getLabels() {
