@@ -40,4 +40,9 @@ public interface RecommendService {
      * @param recommendDto
      */
     Page<Recommend> queryAll(RecommendDto recommendDto);
+
+    /**
+     * 批量数据采集
+     */
+    void collectAll();
 }

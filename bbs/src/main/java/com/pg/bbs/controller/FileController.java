@@ -48,4 +48,22 @@ public class FileController {
             throw new BusinessException(BusinessStatus.FILEUPLOAD_ERROR);
         }
     }
+
+    @RequestMapping(value = "/upload1", method = RequestMethod.POST)
+    public Result<String> upload1() {
+        String url = "https://image-static.segmentfault.com/356/065/3560651027-30251523691dc834_articlex";
+        Calendar now = Calendar.getInstance();
+        String filePathNow = filePath + now.get(Calendar.YEAR) + "/" + (now.get(Calendar.MONTH) + 1) + "/" + now.get(Calendar.DATE) + "/";
+        String nginxPathNow = nginxPath + now.get(Calendar.YEAR) + "/" + (now.get(Calendar.MONTH) + 1) + "/" + now.get(Calendar.DATE) + "/";
+        String filePath = filePathNow;
+        String newFileName = UUID.randomUUID().toString().replace("-", "");
+        String fileName = newFileName+".jpg";
+        try {
+            FileUtil.downloadImage(url, filePath, fileName);
+            return new Result<String>(BusinessStatus.SUCCESS, nginxPathNow + fileName);
+        } catch (Exception e) {
+            throw new BusinessException(BusinessStatus.FILEUPLOAD_ERROR);
+        }
+
+    }
 }

@@ -45,6 +45,13 @@ public class RecommendController {
         return new Result<Recommend>(BusinessStatus.SUCCESS);
     }
 
+    @ApiOperation("采集全部频道")
+    @RequestMapping(value = "/collectAll", method = RequestMethod.POST)
+    public Result<Recommend> collect() {
+        recommendService.collectAll();
+        return new Result<Recommend>(BusinessStatus.SUCCESS);
+    }
+
     @ApiOperation("查询文章、问答详情")
     @RequestMapping(value = "/queryOne", method = RequestMethod.GET)
     public Result<Recommend> findById(@RequestParam String uuid) {
