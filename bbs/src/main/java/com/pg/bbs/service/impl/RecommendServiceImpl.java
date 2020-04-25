@@ -77,7 +77,13 @@ public class RecommendServiceImpl implements RecommendService {
 
     @Override
     public Recommend findById(String uuid) {
-        return recommendMapper.findById(uuid);
+        if (StringUtil.isEmpty(uuid)) {
+            throw new BusinessException(500, "uuid必传");
+        }
+        Recommend recommend = recommendMapper.findById(uuid);
+        List<Labels> labels = labelsMapper.findSplitData(recommend.getLabels());
+        recommend.getLabelArr().addAll(labels);
+        return recommend;
     }
 
     @Override

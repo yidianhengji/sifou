@@ -15,7 +15,7 @@ public class RecommendDto {
     private Integer pageNum;
 
     @ApiModelProperty(value = "频道id")
-    private String channelsId;
+    private String channelsType;
 
     public Integer getPageSize() {
         return pageSize;
@@ -33,11 +33,11 @@ public class RecommendDto {
         this.pageNum = pageNum;
     }
 
-    public String getChannelsId() {
-        return channelsId;
+    public String getChannelsType() {
+        return channelsType;
     }
 
-    public void setChannelsId(String channelsId) {
-        this.channelsId = channelsId;
+    public void setChannelsType(String channelsType) {
+        this.channelsType = channelsType;
     }
 }

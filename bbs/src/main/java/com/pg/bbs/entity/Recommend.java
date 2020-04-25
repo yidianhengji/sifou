@@ -49,6 +49,9 @@ public class Recommend {
     @ApiModelProperty(value = "富文本内容")
     private String content;
 
+    @ApiModelProperty(value = "markdown内容")
+    private String markdownContent;
+
     @ApiModelProperty(value = "1、草稿箱 2、推荐")
     private Integer status;
 
@@ -158,6 +161,14 @@ public class Recommend {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getMarkdownContent() {
+        return markdownContent;
+    }
+
+    public void setMarkdownContent(String markdownContent) {
+        this.markdownContent = markdownContent;
     }
 
     public Integer getStatus() {

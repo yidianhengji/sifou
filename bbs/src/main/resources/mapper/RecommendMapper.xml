@@ -12,12 +12,41 @@
         <result property="viewsWord" column="views_word" jdbcType="INTEGER"/>
         <result property="status" column="status" jdbcType="INTEGER"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="markdownContent" column="markdown_content" jdbcType="VARCHAR"/>
         <result property="type" column="type" jdbcType="INTEGER"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="modifyTime" column="modify_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <select id="queryAll" resultMap="RecommendMap">
+        SELECT
+			rec.uuid,
+			rec.title,
+			rec.excerpt,
+			rec.image_url,
+			rec.user_id,
+			rec.views_word,
+			rec.create_time,
+			rec.labels,
+			use1.nickname AS userNickname,
+			use1.image_url AS userUrl,
+			ch1.NAME AS channelsName
+		FROM
+			tb_recommend rec
+			<if test="channelsType != null and channelsType != ''">
+                LEFT JOIN tb_channels ch1 ON ch1.url = #{channelsType}
+            </if>
+            <if test="channelsType == null or channelsType == ''">
+                LEFT JOIN tb_channels ch1 ON ch1.url is not null
+            </if>
+			LEFT JOIN tb_users use1 ON rec.user_id = use1.uuid 
+		WHERE
+			rec.channels_id = ch1.uuid
+		ORDER BY
+			rec.create_time
+    </select>
+
+    <select id="findById" resultMap="RecommendMap">
         SELECT
             rec.uuid,
             rec.title,
@@ -28,21 +57,12 @@
             rec.create_time,
             rec.labels,
             use1.nickname AS userNickname,
-            use1.image_url AS userUrl,
-            ch1. NAME AS channelsName
+            use1.image_url AS userUrl
         FROM
             tb_recommend rec
-        LEFT JOIN tb_channels ch1 ON ch1.uuid = rec.channels_id
         LEFT JOIN tb_users use1 ON rec.user_id = use1.uuid
-        <if test="channelsId != null and channelsId !=''">
-            Where rec.channels_id = #{channelsId}
-        </if>
-        ORDER BY
-            rec.create_time
-    </select>
-
-    <select id="findById" resultMap="RecommendMap">
-        select * from tb_recommend where uuid = #{uuid}
+        WHERE
+            rec.uuid = #{uuid}
     </select>
 
     <select id="findQueryTitle" resultType="java.lang.Integer">
@@ -50,8 +70,8 @@
     </select>
 
     <insert id="insert">
-        insert into  tb_recommend(uuid, title, excerpt, image_url, user_id, channels_id, labels, views_word, content, status, type, create_time, modify_time)
-        values (#{uuid}, #{title}, #{excerpt}, #{imageUrl}, #{userId}, #{channelsId}, #{labels}, #{viewsWord}, #{content}, #{status}, #{type}, #{createTime}, #{modifyTime})
+        insert into  tb_recommend(uuid, title, excerpt, image_url, user_id, channels_id, labels, views_word, content, markdown_content, status, type, create_time, modify_time)
+        values (#{uuid}, #{title}, #{excerpt}, #{imageUrl}, #{userId}, #{channelsId}, #{labels}, #{viewsWord}, #{content}, #{markdownContent}, #{status}, #{type}, #{createTime}, #{modifyTime})
     </insert>
 
     <update id="update">
@@ -80,6 +100,9 @@
             </if>
             <if test="content != null and content != ''">
                 content = #{content},
+            </if>
+            <if test="markdownContent != null and markdownContent != ''">
+                markdown_content = #{markdownContent},
             </if>
             <if test="status != null and status != ''">
                 status = #{status},
