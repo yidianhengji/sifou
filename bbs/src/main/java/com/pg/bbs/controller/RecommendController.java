@@ -3,7 +3,6 @@ package com.pg.bbs.controller;
 import com.github.pagehelper.Page;
 import com.pg.bbs.dto.CollectDto;
 import com.pg.bbs.dto.RecommendDto;
-import com.pg.bbs.entity.Channels;
 import com.pg.bbs.entity.Recommend;
 import com.pg.bbs.handler.BusinessStatus;
 import com.pg.bbs.handler.PageInfo;

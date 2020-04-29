@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
-Source Server Version : 50560
+Source Server Version : 50562
 Source Host           : localhost:3306
 Source Database       : bbs_sifou
 
 Target Server Type    : MYSQL
-Target Server Version : 50560
+Target Server Version : 50562
 File Encoding         : 65001
 
-Date: 2020-04-25 13:41:31
+Date: 2020-04-29 15:35:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -595,6 +595,7 @@ INSERT INTO `tb_users` VALUES ('f53014d680884163a5bd5ce762e90cdf', '回忆积累
 DROP TABLE IF EXISTS `tb_users_info`;
 CREATE TABLE `tb_users_info` (
   `uuid` varchar(50) NOT NULL,
+  `user_id` varchar(50) DEFAULT NULL COMMENT '用戶id',
   `name` varchar(20) DEFAULT NULL COMMENT '名称',
   `name_sub` varchar(20) DEFAULT NULL COMMENT '子标题',
   `start_time` datetime DEFAULT NULL COMMENT '开始时间',
@@ -602,7 +603,7 @@ CREATE TABLE `tb_users_info` (
   `is_time` bit(1) DEFAULT NULL COMMENT '判断结束时间是否要填',
   `city` varchar(50) DEFAULT NULL COMMENT '所在城市',
   `label_id` varchar(255) DEFAULT NULL COMMENT '标签id',
-  `desc` varchar(255) DEFAULT NULL COMMENT '描述',
+  `description` varchar(255) DEFAULT NULL COMMENT '描述',
   `type` int(1) DEFAULT NULL COMMENT '1、工作经历 2、教育经历 3、开源项目',
   PRIMARY KEY (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息表(工作经历,教育经历,开源项目 & 文章著作)';
@@ -610,3 +611,7 @@ CREATE TABLE `tb_users_info` (
 -- ----------------------------
 -- Records of tb_users_info
 -- ----------------------------
+INSERT INTO `tb_users_info` VALUES ('0103f0b42a7f4330b9210c1483601eff', '1c5851dc916d4e70a60f0c957f548876', '12323', '', null, null, '', '', '', null, '2');
+INSERT INTO `tb_users_info` VALUES ('25a6546cbaf444cf9b8ee4fe352a3b6f', '1c5851dc916d4e70a60f0c957f548876', '123213123', '', null, null, '', '', '', null, '0');
+INSERT INTO `tb_users_info` VALUES ('485d2739849845bdab635849b20509ad', '1c5851dc916d4e70a60f0c957f548876', '12323', '', null, null, '', '', '', null, '0');
+INSERT INTO `tb_users_info` VALUES ('b9dd9f5e29ad4c79b841c10d83d19374', '1c5851dc916d4e70a60f0c957f548876', '12323', '', null, null, '', '', '', null, '1');

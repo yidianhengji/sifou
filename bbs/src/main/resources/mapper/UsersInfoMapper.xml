@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pg.bbs.dao.UsersInfoMapper">
+
+    <resultMap type="com.pg.bbs.entity.UsersInfo" id="UsersInfoMap">
+        <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="nameSub" column="name_sub" jdbcType="VARCHAR"/>
+        <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
+        <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+        <result property="isTime" column="is_time" jdbcType="BOOLEAN"/>
+        <result property="city" column="city" jdbcType="VARCHAR"/>
+        <result property="labelId" column="label_id" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="queryAll" resultMap="UsersInfoMap">
+        SELECT * FROM tb_users_info WHERE user_id = #{userId}
+    </select>
+
+    <select id="queryOne" resultMap="UsersInfoMap">
+        select * from tb_users_info where uuid = #{uuid}
+    </select>
+
+    <insert id="insert">
+        insert into tb_users_info(uuid, user_id, name, name_sub, start_time, end_time, is_time, city, label_id, description, type)
+        values (#{uuid}, #{userId}, #{name}, #{nameSub}, #{startTime}, #{endTime}, #{isTime}, #{city}, #{labelId}, #{description}, #{type})
+    </insert>
+
+    <update id="update">
+        update tb_users_info
+        <set>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="nameSub != null and nameSub != ''">
+                name_sub = #{nameSub},
+            </if>
+            <if test="startTime != null and startTime != ''">
+                start_time = #{startTime},
+            </if>
+            <if test="endTime != null and endTime != ''">
+                end_Time = #{endTime},
+            </if>
+            <if test="isTime != null and isTime != ''">
+                is_time = #{isTime},
+            </if>
+            <if test="city != null and city != ''">
+                city = #{city},
+            </if>
+            <if test="labelId != null and labelId != ''">
+                label_id = #{labelId},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type},
+            </if>
+        </set>
+        where uuid = #{uuid}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM tb_users_info WHERE uuid = #{uuid}
+    </delete>
+
+</mapper>
