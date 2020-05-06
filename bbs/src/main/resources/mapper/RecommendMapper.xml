@@ -42,6 +42,12 @@
 			LEFT JOIN tb_users use1 ON rec.user_id = use1.uuid 
 		WHERE
 			rec.channels_id = ch1.uuid
+        <if test="type != null and type != ''">
+            And type = #{type}
+        </if>
+        <if test="type == null or type == ''">
+            And type = 1
+        </if>
 		ORDER BY
 			rec.create_time
     </select>
@@ -55,6 +61,8 @@
             rec.user_id,
             rec.views_word,
             rec.create_time,
+            rec.content,
+	        rec.markdown_content,
             rec.labels,
             use1.nickname AS userNickname,
             use1.image_url AS userUrl

@@ -17,6 +17,9 @@ public class RecommendDto {
     @ApiModelProperty(value = "频道id")
     private String channelsType;
 
+    @ApiModelProperty(value = "类型")
+    private Integer type;
+
     public Integer getPageSize() {
         return pageSize;
     }
@@ -39,5 +42,13 @@ public class RecommendDto {
 
     public void setChannelsType(String channelsType) {
         this.channelsType = channelsType;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 }
