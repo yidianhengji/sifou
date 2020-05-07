@@ -150,6 +150,10 @@ public class Recommend {
         this.votes = votes;
     }
 
+    public void setVotes(Boolean votes) {
+        isVotes = votes;
+    }
+
     public Integer getViewsWord() {
         return viewsWord;
     }
