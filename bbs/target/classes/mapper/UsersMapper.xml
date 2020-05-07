@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pg.bbs.dao.UsersMapper">
+
+    <resultMap type="com.pg.bbs.entity.Users" id="UsersMap">
+        <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
+        <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="website" column="website" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="imageUrl" column="image_url" jdbcType="VARCHAR"/>
+        <result property="locationCity" column="location_city" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="resumeDescription" column="resume_description" jdbcType="VARCHAR"/>
+        <result property="goodAtTechnology" column="good_at_technology" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="modifyTime" column="modify_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="getUserPhone" resultType="java.lang.Integer">
+        select COUNT(phone) from tb_users where phone = #{phone}
+    </select>
+
+    <select id="findUserById" resultMap="UsersMap">
+        select * from tb_users where uuid = #{uuid}
+    </select>
+
+    <insert id="signUp">
+        insert into tb_users(uuid, nickname, phone, password, create_time, modify_time)
+        values (#{uuid}, #{nickname}, #{phone}, #{password}, #{createTime}, #{modifyTime})
+    </insert>
+
+    <select id="signIn" resultMap="UsersMap">
+        select * from tb_users where phone = #{phone}
+    </select>
+
+    <select id="randomData" resultMap="UsersMap">
+        select * from tb_users order by rand() LIMIT 1
+    </select>
+
+</mapper>

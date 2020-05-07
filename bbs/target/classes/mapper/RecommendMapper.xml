@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pg.bbs.dao.RecommendMapper">
+    <resultMap type="com.pg.bbs.entity.Recommend" id="RecommendMap">
+        <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="excerpt" column="excerpt" jdbcType="VARCHAR"/>
+        <result property="imageUrl" column="image_url" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="channelsId" column="channels_id" jdbcType="VARCHAR"/>
+        <result property="labels" column="labels" jdbcType="VARCHAR"/>
+        <result property="viewsWord" column="views_word" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="markdownContent" column="markdown_content" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="modifyTime" column="modify_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="queryAll" resultMap="RecommendMap">
+        SELECT
+			rec.uuid,
+			rec.title,
+			rec.excerpt,
+			rec.image_url,
+			rec.user_id,
+			rec.views_word,
+			rec.create_time,
+			rec.labels,
+			use1.nickname AS userNickname,
+			use1.image_url AS userUrl,
+			ch1.NAME AS channelsName
+		FROM
+			tb_recommend rec
+			<if test="channelsType != null and channelsType != ''">
+                LEFT JOIN tb_channels ch1 ON ch1.url = #{channelsType}
+            </if>
+            <if test="channelsType == null or channelsType == ''">
+                LEFT JOIN tb_channels ch1 ON ch1.url is not null
+            </if>
+			LEFT JOIN tb_users use1 ON rec.user_id = use1.uuid 
+		WHERE
+			rec.channels_id = ch1.uuid
+        <if test="type != null and type != ''">
+            And type = #{type}
+        </if>
+        <if test="type == null or type == ''">
+            And type = 1
+        </if>
+		ORDER BY
+			rec.create_time
+    </select>
+
+    <select id="findById" resultMap="RecommendMap">
+        SELECT
+            rec.uuid,
+            rec.title,
+            rec.excerpt,
+            rec.image_url,
+            rec.user_id,
+            rec.views_word,
+            rec.create_time,
+            rec.content,
+	        rec.markdown_content,
+            rec.labels,
+            use1.nickname AS userNickname,
+            use1.image_url AS userUrl
+        FROM
+            tb_recommend rec
+        LEFT JOIN tb_users use1 ON rec.user_id = use1.uuid
+        WHERE
+            rec.uuid = #{uuid}
+    </select>
+
+    <select id="findQueryTitle" resultType="java.lang.Integer">
+        select COUNT(title) from tb_recommend where title = #{title}
+    </select>
+
+    <insert id="insert">
+        insert into  tb_recommend(uuid, title, excerpt, image_url, user_id, channels_id, labels, views_word, content, markdown_content, status, type, create_time, modify_time)
+        values (#{uuid}, #{title}, #{excerpt}, #{imageUrl}, #{userId}, #{channelsId}, #{labels}, #{viewsWord}, #{content}, #{markdownContent}, #{status}, #{type}, #{createTime}, #{modifyTime})
+    </insert>
+
+    <update id="update">
+        update tb_recommend
+        <set>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="excerpt != null and excerpt != ''">
+                excerpt = #{excerpt},
+            </if>
+            <if test="imageUrl != null and imageUrl != ''">
+                image_url = #{imageUrl},
+            </if>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId},
+            </if>
+            <if test="channelsId != null and channelsId !=''">
+                channels_id = #{channelsId}
+            </if>
+            <if test="labels != null and labels != ''">
+                labels = #{labels},
+            </if>
+            <if test="viewsWord != null and viewsWord != ''">
+                views_word = #{viewsWord},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test="markdownContent != null and markdownContent != ''">
+                markdown_content = #{markdownContent},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+        </set>
+        where uuid = #{uuid}
+    </update>
+
+</mapper>

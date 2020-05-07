@@ -1,0 +1,28 @@
+server:
+  port: 9091
+spring:
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+logging:
+  pattern:
+    console: "[%thread] %-5level %logger{36} - %msg%n"
+
+mybatis_config_file: mybatis-config.xml
+mapper_path: /mapper/**.xml
+entity_package: com.pg.bbs.entity
+
+filePath:   F:/work/tup/
+nginxPath:  http://localhost:8060/tup/
+
+jdbc:
+  driver: com.mysql.jdbc.Driver
+  url: jdbc:mysql://localhost:3306/bbs_sifou?userUnicode=true&characterEncoding=utf-8&useSSL=false
+  username: root
+  password: 123456
+
+jwt:
+  secretkey: token123
+  expiretime: 86400000
+  path: /api/recommend/save,/api/recommend/updata,/api/labels/save,/api/labels/update,/api/labels/delete,/api/channels/save,/api/channels/update,/api/userinfo/save,/api/userinfo/update,/api/userinfo/queryOne,/api/userinfo/queryAll,/api/userinfo/delete
+#新增修改文章/问答，新增修改删除标签，新增修改删除频道

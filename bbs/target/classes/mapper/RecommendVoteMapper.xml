@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pg.bbs.dao.RecommendVoteMapper">
+    <resultMap type="com.pg.bbs.entity.RecommendVote" id="RecommendVoteMap">
+        <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
+        <result property="recommendId" column="recommend_id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="queryFindList" resultType="java.lang.Integer">
+        select COUNT(*) from tb_recommend_vote where recommend_id = #{recommendId} and  user_id = #{userId}
+    </select>
+
+    <select id="queryCount" resultType="java.lang.Integer">
+        select COUNT(*) from tb_recommend_vote where recommend_id = #{recommendId}
+    </select>
+
+    <insert id="insert">
+        insert into tb_recommend_vote(uuid, recommend_id, user_id)
+        values (#{uuid}, #{recommendId}, #{userId})
+    </insert>
+
+    <delete id="delete">
+        delete FROM tb_recommend_vote where recommend_id = #{recommendId} and  user_id = #{userId}
+    </delete>
+
+</mapper>

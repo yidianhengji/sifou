@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pg.bbs.dao.LabelsMapper">
+    <resultMap type="com.pg.bbs.entity.Labels" id="LabelsMap">
+        <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
+        <result property="channelsId" column="channels_id" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="iconUrl" column="icon_url" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="modifyTime" column="modify_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="queryOne" resultMap="LabelsMap">
+        select * from tb_labels where uuid = #{uuid}
+    </select>
+
+    <select id="findName" resultType="java.lang.Integer">
+        select COUNT(name) from tb_labels where name = #{name}
+    </select>
+
+    <select id="findListNameData" resultMap="LabelsMap">
+        select * from tb_labels where name = #{name}
+    </select>
+
+    <select id="findSplitData" resultMap="LabelsMap">
+        select uuid, name from tb_labels where FIND_IN_SET(uuid, #{ids})
+    </select>
+
+    <insert id="insert">
+        insert into tb_labels(uuid, channels_id, name, icon_url, description, create_time, modify_time)
+        values (#{uuid}, #{channelsId}, #{name}, #{iconUrl}, #{description}, #{createTime}, #{modifyTime})
+    </insert>
+
+    <update id="update">
+        update tb_labels
+        <set>
+            <if test="channelsId != null and channelsId != ''">
+                channels_id = #{channelsId},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="iconUrl != null and iconUrl != ''">
+                icon_url = #{iconUrl},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+        </set>
+        where uuid = #{uuid}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM tb_labels WHERE uuid = #{uuid}
+    </delete>
+
+
+</mapper>
