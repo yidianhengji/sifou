@@ -30,4 +30,5 @@ public interface RecommendVoteMapper {
      * @param recommendId
      */
     int queryCount(String recommendId);
+
 }

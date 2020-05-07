@@ -81,8 +81,20 @@ public class RecommendServiceImpl implements RecommendService {
             throw new BusinessException(500, "uuid必传");
         }
         Recommend recommend = recommendMapper.findById(uuid);
+        // 查询对应的标签
         List<Labels> labels = labelsMapper.findSplitData(recommend.getLabels());
         recommend.getLabelArr().addAll(labels);
+        // 查询点赞的总数
+        int queryCount = recommendVoteMapper.queryCount(uuid);
+        recommend.setVotes(queryCount);
+        // 判断当前用户否投票了
+        String userId = JwtGetUserInterceptor.getUserId();
+        int queryFindList = recommendVoteMapper.queryFindList(uuid, userId);
+        if(queryFindList>0) {
+            recommend.setIsVotes(true);
+        } else {
+            recommend.setIsVotes(false);
+        }
         return recommend;
     }
 

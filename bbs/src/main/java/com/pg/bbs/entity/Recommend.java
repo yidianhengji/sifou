@@ -43,6 +43,9 @@ public class Recommend {
     @ApiModelProperty(value = "投票数")
     private Integer votes;
 
+    @ApiModelProperty(value = "是否投票")
+    private Boolean isVotes;
+
     @ApiModelProperty(value = "阅读数")
     private Integer viewsWord;
 
